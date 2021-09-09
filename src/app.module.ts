@@ -24,7 +24,13 @@ import { AuthorsResolver } from './author.resolver'
       entities: [Photo, User],
       synchronize: true,
     }),
-    GraphQLModule.forRoot({ autoSchemaFile: true }),
+    GraphQLModule.forRoot({
+      autoSchemaFile: true,
+      installSubscriptionHandlers: true,
+      context: ({ req }) => {
+        return { request: req }
+      },
+    }),
   ],
   controllers: [AppController],
   providers: [AppService, AuthorsResolver, TestResolver],
